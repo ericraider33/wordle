@@ -3,8 +3,8 @@ $(document).ready(handleDocumentReady);
 window.onkeydown = handleKeyDown;
 
 var context;
-
-return;
+var wordle = new Wordle({ size: 5, rows: 6 });
+console.log(wordle.size);
 
 
 function handleErrors(msg, url, line, col, error) 
@@ -46,7 +46,12 @@ function animate()
 {
 	context.clearRect(0, 0, 640, 480);
 
-	
+
+
+	context.fillStyle = "green";
+//	context.fillRect(10, 10, 150, 100);
+
+	wordle.draw(context);
 	context.setTransform(1, 0, 0, 1, 0, 0);		// clears transform
 	window.requestAnimationFrame(animate);
 }		
