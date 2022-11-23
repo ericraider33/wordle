@@ -19,8 +19,19 @@ function handleDocumentReady()
 {
 	console.log('Loading game');
 	
-	var canvas = $('#main-canvas')[0];
-	context = canvas.getContext('2d');	
+	var $canvas = $('#main-canvas');
+	var $parent = $canvas.parent();
+	var available = { x: $parent.width(), y: $parent.height() };
+	var scaled = { x: available.y / 6 * 5, y: available.y };
+	
+	var canvas = $canvas[0];	
+	canvas.width  = 500;				// pallet size
+	canvas.height = 600; 				// pallet size
+	$canvas.width(scaled.x);			// display size
+	$canvas.height(scaled.y);			// display size
+	$canvas.show();
+	
+	context = $canvas[0].getContext('2d');	
 
 	animate(); 	
 }
@@ -52,7 +63,7 @@ function animate()
 
 
 	context.fillStyle = "green";
-//	context.fillRect(10, 10, 150, 100);
+	context.fillRect(10, 10, 150, 100);
 
 	wordle.draw(context);
 	context.setTransform(1, 0, 0, 1, 0, 0);		// clears transform
