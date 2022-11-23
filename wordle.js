@@ -12,11 +12,13 @@ function Wordle(argument) {
 		
 		for (var j = 0; j < this.size; j++)
 		{
-			row[j] = j.toString();
+			row[j] = i.toString() + j.toString();
 		}
 	}
 
 	this.draw = draw;
+	this.setLetter = setLetter;
+	this.nextLine = nextLine;
 	return this;
 
 	function draw(context)
@@ -28,8 +30,27 @@ function Wordle(argument) {
 			for (var j = 0; j < this.size; j++)
 			{
 				var text = row[j];
-				context.fillText(text, j*10, i*10);
+				context.fillText(text, j*20, i*10+10);
 			}
 		}
 	}
+
+	function setLetter(letter)
+	{
+		var row = this.data[this.currentRow];
+		row[this.currentCol] = letter;
+		this.currentCol = this.currentCol + 1;
+		if (this.currentCol === this.size)
+			this.currentCol = this.currentCol - 1;
+	}
+
+	function nextLine()
+	{
+		this.currentRow = this.currentRow + 1;
+		this.currentCol = 0; 
+
+	}
+
+
+
 }

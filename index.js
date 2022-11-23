@@ -29,17 +29,20 @@ function handleKeyDown(e)
 {
 	var key = e.keyCode ? e.keyCode : e.which;
 	console.log('Key pressed ' + key);
-	/*
+	
 	switch (key)
 	{
-		case 37: moveX(block, false);	break;
-		case 38: moveY(block, true);	break;
-		case 39: moveX(block, true);	break;
-		case 40: moveY(block, false);	break;
+		case 13:
+		 	wordle.nextLine();
+		 	break;
+
+		default:
+			var letter = String.fromCharCode(key);
+			wordle.setLetter(letter);
+			break;
 	}
-	*/
 	
-	// is a comment
+	
 }
 
 function animate() 
