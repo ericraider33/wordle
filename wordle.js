@@ -1,27 +1,26 @@
-function Wordle(argument) {
-	this.size = argument.size;
-	this.rows = argument.rows;
-	this.currentRow = 0;
-	this.currentCol = 0;
-	this.data = [];
-
-	for (var i = 0; i < this.rows; i++)
+class Wordle 
+{
+	constructor(argument)
 	{
-		var row = [];
-		this.data[i] = row;
-		
-		for (var j = 0; j < this.size; j++)
+		this.size = argument.size;
+		this.rows = argument.rows;
+		this.currentRow = 0;
+		this.currentCol = 0;
+		this.data = [];
+
+		for (var i = 0; i < this.rows; i++)
 		{
-			row[j] = i.toString() + j.toString();
+			var row = [];
+			this.data[i] = row;
+			
+			for (var j = 0; j < this.size; j++)
+			{
+				row[j] = i.toString() + j.toString();
+			}
 		}
 	}
 
-	this.draw = draw;
-	this.setLetter = setLetter;
-	this.nextLine = nextLine;
-	return this;
-
-	function draw(context)
+	draw(context)
 	{
 		for (var i = 0; i < this.rows; i++)
 		{
@@ -35,7 +34,7 @@ function Wordle(argument) {
 		}
 	}
 
-	function setLetter(letter)
+	setLetter(letter)
 	{
 		var row = this.data[this.currentRow];
 		row[this.currentCol] = letter;
@@ -44,13 +43,10 @@ function Wordle(argument) {
 			this.currentCol = this.currentCol - 1;
 	}
 
-	function nextLine()
+	nextLine()
 	{
 		this.currentRow = this.currentRow + 1;
 		this.currentCol = 0; 
 
 	}
-
-
-
 }
