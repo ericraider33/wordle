@@ -50,6 +50,7 @@ class Wordle
 	drawBorder(context)
 	{
 		context.fillStyle = "green";
+		context.lineWidth = 1;
 		context.beginPath(); 
 		context.moveTo(0, 0); 
 		context.lineTo(this.width-1, 0);
@@ -63,24 +64,23 @@ class Wordle
 	{
 		for (var row = 0; row < this.rows; row++)
 		{	
-			for (var col = 0; col < this.size; col++)
-			{
-				this.drawBox(context, col, row);
-			}
+			var y = row * this.boxSize;
+			context.lineWidth = 1;
+			context.beginPath();
+			context.moveTo(0, y);
+			context.lineTo(this.width, y);
+			context.stroke();
 		}
-	}
 
-	drawBox(context, col, row)
-	{
-		var x = col * this.boxSize;
-		var y = row * this.boxSize;
-		context.beginPath();
-		context.moveTo(x, y);
-		context.lineTo(x + this.boxSize - 1, y);
-		context.lineTo(x + this.boxSize - 1, y + this.boxSize - 1);
-		context.lineTo(x, y + this.boxSize - 1);
-		context.lineTo(x, y);
-		context.stroke();
+		for (var col = 0; col < this.size; col++)
+		{
+			var x = col * this.boxSize;
+			context.lineWidth = 1;
+			context.beginPath();
+			context.moveTo(x, 0);
+			context.lineTo(x, this.height);
+			context.stroke();
+		}
 	}
 
 	setLetter(letter)
