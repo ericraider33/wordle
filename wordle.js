@@ -29,12 +29,14 @@ class Wordle
 		this.boxSize = Math.min(width / this.size, height / this.rows);
 		this.width = this.boxSize * this.size;
 		this.height = this.boxSize * this.rows;
+		this.fontSize = Math.round(this.boxSize * 2 / 3);
 
 		return { width: this.width, height: this.height };
 	}
 
 	draw(context)
 	{
+		context.font = "bold "+this.fontSize+"px serif";
 		for (var row = 0; row < this.rows; row++)
 		{
 			var line = this.data[row];
@@ -42,7 +44,9 @@ class Wordle
 			for (var col = 0; col < this.size; col++)
 			{
 				var text = line[col];
-				context.fillText(text, col*this.boxSize, row*this.boxSize+10);
+				var textSize = context.measureText(text);
+				var offX = Math.round((this.boxSize - textSize.width) /2);
+				context.fillText(text, col*this.boxSize + offX, row*this.boxSize+ this.fontSize);
 			}
 		}
 	}
