@@ -21,19 +21,19 @@ function handleDocumentReady()
 	
 	var $canvas = $('#main-canvas');
 	var $parent = $canvas.parent();
-	var available = { x: $parent.width(), y: $parent.height() };
-	var scaled = { x: available.y / 6 * 5, y: available.y };
+	var scaled = wordle.calculateBoxSize($parent.width(), $parent.height());
 	
 	var canvas = $canvas[0];	
-	canvas.width  = 500;				// pallet size
-	canvas.height = 600; 				// pallet size
-	$canvas.width(scaled.x);			// display size
-	$canvas.height(scaled.y);			// display size
+	canvas.width  = scaled.width;				// pallet size
+	canvas.height = scaled.height; 				// pallet size
+	$canvas.width(scaled.width);				// display size
+	$canvas.height(scaled.height);				// display size
 	$canvas.show();
 	
 	context = $canvas[0].getContext('2d');	
 
-	animate(); 	
+	animate();
+
 }
 		
 function handleKeyDown(e)
@@ -56,16 +56,14 @@ function handleKeyDown(e)
 	
 }
 
-function animate() 
+function animate()
 {
 	context.clearRect(0, 0, 640, 480);
-
-
-
-	context.fillStyle = "green";
-	context.fillRect(10, 10, 150, 100);
-
+	wordle.drawBorder(context);
+	wordle.drawGrid(context);
 	wordle.draw(context);
+
+	//context.fillRect(10, 10, 150, 100);
 	context.setTransform(1, 0, 0, 1, 0, 0);		// clears transform
 	window.requestAnimationFrame(animate);
 }		

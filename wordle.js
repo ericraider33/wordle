@@ -8,30 +8,79 @@ class Wordle
 		this.currentCol = 0;
 		this.data = [];
 
-		for (var i = 0; i < this.rows; i++)
+		for (var row = 0; row < this.rows; row++)
 		{
-			var row = [];
-			this.data[i] = row;
+			var line = [];
+			this.data[row] = line;
 			
-			for (var j = 0; j < this.size; j++)
+			for (var col = 0; col < this.size; col++)
 			{
-				row[j] = i.toString() + j.toString();
+				line[col] = row.toString() + col.toString();
 			}
 		}
 	}
 
+	calculateBoxSize(width, height)
+	{
+		// Trims to whole number
+		width -= width % this.size;			
+		height -= height % this.rows;
+
+		this.boxSize = Math.min(width / this.size, height / this.rows);
+		this.width = this.boxSize * this.size;
+		this.height = this.boxSize * this.rows;
+
+		return { width: this.width, height: this.height };
+	}
+
 	draw(context)
 	{
-		for (var i = 0; i < this.rows; i++)
+		for (var row = 0; row < this.rows; row++)
 		{
-			var row = this.data[i];
+			var line = this.data[row];
 			
-			for (var j = 0; j < this.size; j++)
+			for (var col = 0; col < this.size; col++)
 			{
-				var text = row[j];
-				context.fillText(text, j*20, i*10+10);
+				var text = line[col];
+				context.fillText(text, col*this.boxSize, row*this.boxSize+10);
 			}
 		}
+	}
+
+	drawBorder(context)
+	{
+		context.fillStyle = "green";
+		context.beginPath(); 
+		context.moveTo(0, 0); 
+		context.lineTo(this.width-1, 0);
+		context.lineTo(this.width-1, this.height-1);
+		context.lineTo(0, this.height-1);
+		context.lineTo(0, 0); 
+		context.stroke(); 		
+	}
+
+	drawGrid(context)
+	{
+		for (var row = 0; row < this.rows; row++)
+		{	
+			for (var col = 0; col < this.size; col++)
+			{
+				this.drawBox(context, col, row);
+			}
+		}
+	}
+
+	drawBox(context, col, row)
+	{
+		var x = col * this.boxSize;
+		var y = row * this.boxSize;
+		context.beginPath();
+		context.moveTo(x, y);
+		context.lineTo(x + this.boxSize - 1, y);
+		context.lineTo(x + this.boxSize - 1, y + this.boxSize - 1);
+		context.lineTo(x, y + this.boxSize - 1);
+		context.lineTo(x, y);
+		context.stroke();
 	}
 
 	setLetter(letter)
@@ -47,6 +96,5 @@ class Wordle
 	{
 		this.currentRow = this.currentRow + 1;
 		this.currentCol = 0; 
-
 	}
 }
